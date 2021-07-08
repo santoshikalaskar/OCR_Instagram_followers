@@ -13,14 +13,14 @@ def mousePoints(event, x,y, flags,params):
         counter = counter +1
         print(circles)
 
-img = cv2.imread('test.jpeg')
+img = cv2.imread('Data/test.jpeg')
 print("original shape:", img.shape)
 
-img = cv2.resize(img, (500, 750))
+img = cv2.resize(img, (500, 700))
 
 while True:
     if counter == 4:
-        width, height = 550, 200
+        width, height = 300, 600
         pts1 = np.float32([circles[0],circles[1], circles[2], circles[3]])
         pts2 = np.float32([[0,0],[width,0],[0,height],[width,height]])
         matrix = cv2.getPerspectiveTransform(pts1,pts2)
