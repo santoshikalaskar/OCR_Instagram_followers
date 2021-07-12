@@ -19,11 +19,17 @@ class OCR:
         """
             get Account holder name in text format
         """
-        holder_name = img_text.split("<")[1].split('\n')[0]
-        reexp = "(?:^|(?<= ))[a-zA-Z0-9]+(?= |$)"
-        holder_name = re.findall(reexp, holder_name)
-        # print("---------------- \n",holder_name,"\n------------------")
-        return holder_name[0]
+        try:
+            holder_name = img_text.split("<")[1].split('\n')[0]
+            regexp = "(?:^|(?<= ))[a-zA-Z0-9]+(?= |$)"
+            holder_name = re.findall(regexp, holder_name)
+            if len(holder_name) > 0:
+                return holder_name[0]
+            else:
+                holder_name = img_text.split("<")[1].strip().split("\n")[0]
+                return holder_name
+        except Exception as e:
+            print(e)
 
     def check_followers(self, followers_list, check_list):
         """
@@ -45,14 +51,14 @@ class OCR:
             text_result = self.fetch_text(img)
             print(text_result)
             acc_holder_name = self.get_acc_holder_name_text(text_result)
-            print(acc_holder_name)
+            print("Account Holder Name : ",acc_holder_name)
             followers_list = text_result.split("<")[1].split()
-            print(self.check_followers(followers_list, check_followers_list))
+            print("Followers List : ",self.check_followers(followers_list, check_followers_list))
 
 if __name__ == "__main__":
     ocr_obj = OCR()
 
-    img_path = "Data/test_s2.jpg"
+    img_path = "Data/test2.jpg"
     check_followers_list = ['harshu_kitty_lover_20', 'ganeshkondawar88']
     social_media_name = "instagram"
 
