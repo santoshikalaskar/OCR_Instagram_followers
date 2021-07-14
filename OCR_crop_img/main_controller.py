@@ -1,4 +1,6 @@
 from OCR_instagram import OCR_instagram
+from OCR_facebook import OCR_facebook
+from OCR_linkedin import OCR_linkedin
 import sys
 sys.path.append('../')
 import logger_hander
@@ -19,6 +21,12 @@ class OCR_main_controller:
         try:
             if social_media_name == "instagram":
                 ocr_insta_obj.instagram_handler( img_path,check_followers_list)
+
+            if social_media_name == "facebook":
+                ocr_fb_obj.facebook_handler( img_path,check_followers_list)
+
+            if social_media_name == "instagram":
+                ocr_linkedin_obj.linkedin_handler( img_path,check_followers_list)
         
         except Exception as e:
             logger.exception("Something went Wrong {}".format(e))
@@ -27,6 +35,8 @@ if __name__ == "__main__":
     ocr_obj = OCR_main_controller()
     logger = logger_hander.set_logger()
     ocr_insta_obj = OCR_instagram()
+    ocr_fb_obj = OCR_facebook()
+    ocr_linkedin_obj = OCR_linkedin()
 
     img_path = "../Data/test_s3.jpg"
     check_followers_list = ['rohan_a_patil', 'moolyadhiraj']
