@@ -22,10 +22,10 @@ class OCR_main_controller:
             if social_media_name == "instagram":
                 ocr_insta_obj.instagram_handler( img_path,check_followers_list)
 
-            if social_media_name == "facebook":
+            elif social_media_name == "facebook":
                 ocr_fb_obj.facebook_handler( img_path,check_followers_list)
 
-            if social_media_name == "instagram":
+            elif social_media_name == "linkedin":
                 ocr_linkedin_obj.linkedin_handler( img_path,check_followers_list)
         
         except Exception as e:
