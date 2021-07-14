@@ -15,7 +15,7 @@ def set_logger():
     if not os.path.exists('Logs'):
         os.makedirs('Logs')
     else:
-        file_handler = logging.FileHandler('logs/OCR.log')
+        file_handler = logging.FileHandler('Logs/OCR.log')
         file_handler.setLevel(logging.INFO)
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)

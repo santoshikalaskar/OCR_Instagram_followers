@@ -12,6 +12,9 @@ class OCR_instagram:
         pass
 
     def fetch_text(self, img):
+        """
+            get Text from input img
+        """
         text_result = pytesseract.image_to_string(img)
         return text_result
 
@@ -35,10 +38,17 @@ class OCR_instagram:
         """
             Check list of followers present or not from result list
         """
-        if all(i in followers_list for i in check_list):
-            return True
-        else:
-            return False
+        try:
+            result_list = []
+            for check_list_item in check_list:
+                if check_list_item in followers_list:
+                    result_list.append(True)
+                else:
+                    result_list.append(False)
+            return result_list
+        except Exception as e:
+            self.logger.exception("Something went Wrong while Checking list of followers present or not from result list {}".format(e))
+
 
     def instagram_handler(self, img_path, check_followers_list):
         """

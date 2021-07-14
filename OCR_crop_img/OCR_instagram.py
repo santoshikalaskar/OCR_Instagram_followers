@@ -76,10 +76,13 @@ class OCR_instagram:
             Check list of followers present or not from result list
         """
         try:
-            if all(i in followers_list for i in check_list):
-                return True
-            else:
-                return False
+            result_list = []
+            for check_list_item in check_list:
+                if check_list_item in followers_list:
+                    result_list.append(True)
+                else:
+                    result_list.append(False)
+            return result_list
         except Exception as e:
             self.logger.exception("Something went Wrong while Checking list of followers present or not from result list {}".format(e))
 
