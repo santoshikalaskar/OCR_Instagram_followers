@@ -39,7 +39,7 @@ if __name__ == "__main__":
     ocr_linkedin_obj = OCR_linkedin()
 
     img_path = "../Data/test_s3.jpg"
-    check_followers_list = ['rohan_a_patil', 'moolyadhiraj']
+    check_followers_list = ['soni_codes', 'swap_369']
     social_media_name = "instagram"
 
     ocr_obj.social_media_handler(img_path,social_media_name,check_followers_list)

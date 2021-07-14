@@ -109,10 +109,11 @@ class OCR_instagram:
             print("\n Account Holder Name :", result_acc_holder_name)
             print("\n Account Holder Follower List :", final_follower_list)
 
-            if self.check_followers(final_follower_list, check_followers_list):
-                print("\n ******************\n Followers Present \n ******************\n")
+            result = self.check_followers(final_follower_list, check_followers_list)
+            if all(bool(x) == True for x in result):
+                print("\n ******************\n All Followers Present \n ******************\n")
             else:
-                print("\n ******************\n Followers not Present\n ******************\n")
+                print(result,"\n ******************\n Followers not Present\n ******************\n")
 
             # # show cropped img
             # cv2.imshow("Account follower Name", acc_follower_imgOut)
