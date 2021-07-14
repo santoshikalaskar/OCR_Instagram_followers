@@ -4,7 +4,7 @@ from PIL import Image
 from pytesseract import *
 import re
 
-class OCR:
+class OCR_instagram:
     def __init__(self):
         """
             initialize variables
@@ -40,29 +40,29 @@ class OCR:
         else:
             return False
 
-    def instagram_handler(self, img_path, social_media, check_followers_list):
+    def instagram_handler(self, img_path, check_followers_list):
         """
            Instagram OCR
            input : img_path, social_media_name & followers_list for checking
            Output : Followers present or not Present
         """
-        if social_media == "instagram":
-            img = cv2.imread(img_path)
-            text_result = self.fetch_text(img)
-            print(text_result,"------------------")
-            acc_holder_name = self.get_acc_holder_name_text(text_result)
-            print("Account Holder Name : ",acc_holder_name)
-            followers_list = text_result.split("<")[1].split()
-            print("Followers List : ",self.check_followers(followers_list, check_followers_list))
+
+        img = cv2.imread(img_path)
+        text_result = self.fetch_text(img)
+        print(text_result,"------------------")
+        acc_holder_name = self.get_acc_holder_name_text(text_result)
+        print("Account Holder Name : ",acc_holder_name)
+        followers_list = text_result.split("<")[1].split()
+        print("Followers List : ",self.check_followers(followers_list, check_followers_list))
 
 
-if __name__ == "__main__":
-    ocr_obj = OCR()
-
-    img_path = "Data/test_s3.jpg"
-    # check_followers_list = ['harshu_kitty_lover_20', 'ganeshkondawar88']
-    check_followers_list = ['_c_h_h_a_', 'a_x_a_y_2_2_2']
-    social_media_name = "instagram"
-
-    ocr_obj.instagram_handler(img_path,social_media_name,check_followers_list)
+# if __name__ == "__main__":
+#     ocr_obj = OCR_instagram()
+# 
+#     img_path = "Data/test_s3.jpg"
+#     # check_followers_list = ['harshu_kitty_lover_20', 'ganeshkondawar88']
+#     check_followers_list = ['_c_h_h_a_', 'a_x_a_y_2_2_2']
+#     social_media_name = "instagram"
+# 
+#     ocr_obj.instagram_handler(img_path,social_media_name,check_followers_list)
     
