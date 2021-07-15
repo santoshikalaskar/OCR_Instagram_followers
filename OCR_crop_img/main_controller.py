@@ -19,13 +19,13 @@ class OCR_main_controller:
            Output : Followers present or not Present
         """
         try:
-            if social_media_name == "instagram":
+            if social_media_name.lower() == "instagram":
                 ocr_insta_obj.instagram_handler( img_path,check_followers_list)
 
-            elif social_media_name == "facebook":
+            elif social_media_name.lower() == "facebook":
                 ocr_fb_obj.facebook_handler( img_path,check_followers_list)
 
-            elif social_media_name == "linkedin":
+            elif social_media_name.lower() == "linkedin":
                 ocr_linkedin_obj.linkedin_handler( img_path,check_followers_list)
         
         except Exception as e:

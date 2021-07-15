@@ -77,6 +77,8 @@ class OCR_instagram:
         """
         try:
             result_list = []
+            check_list = [x.lower() for x in check_list]
+            followers_list = [x.lower() for x in followers_list]
             for check_list_item in check_list:
                 if check_list_item in followers_list:
                     result_list.append(True)

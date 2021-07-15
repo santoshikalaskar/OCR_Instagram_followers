@@ -17,7 +17,7 @@ class OCR_main_controller:
            Output : Followers present or not Present
         """
         try:
-            if social_media_name == "instagram":
+            if social_media_name.lower() == "instagram":
                 ocr_insta_obj.instagram_handler(img_path, check_followers_list)
 
         except Exception as e:
@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
         img_path = "../Data/test_s12.jpg"
         check_followers_list = ['bridgelabz', 'codermacha', 'confident_coder']
-        social_media_name = "instagram"
+        social_media_name = "Instagram"
 
         ocr_obj.social_media_handler(img_path, social_media_name, check_followers_list)
 
