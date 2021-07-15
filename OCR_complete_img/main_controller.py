@@ -25,12 +25,16 @@ class OCR_main_controller:
 
 
 if __name__ == "__main__":
-    ocr_obj = OCR_main_controller()
-    logger = logger_hander.set_logger()
-    ocr_insta_obj = OCR_instagram()
+    try:
+        ocr_obj = OCR_main_controller()
+        logger = logger_hander.set_logger()
+        ocr_insta_obj = OCR_instagram()
 
-    img_path = "../Data/test_s3.jpg"
-    check_followers_list = ['soni_codes', 'smita_mj']
-    social_media_name = "instagram"
+        img_path = "../Data/test_s12.jpg"
+        check_followers_list = ['bridgelabz', 'codermacha', 'confident_coder']
+        social_media_name = "instagram"
 
-    ocr_obj.social_media_handler(img_path, social_media_name, check_followers_list)
+        ocr_obj.social_media_handler(img_path, social_media_name, check_followers_list)
+
+    except Exception as e:
+        logger.exception("Something went Wrong in main controller {}".format(e))

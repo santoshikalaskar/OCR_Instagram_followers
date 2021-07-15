@@ -9,7 +9,7 @@ import logger_hander
 class OCR_instagram:
     def __init__(self):
         """
-            initialize variables
+            initialize loggers
         """
         self.logger = logger_hander.set_logger()
 

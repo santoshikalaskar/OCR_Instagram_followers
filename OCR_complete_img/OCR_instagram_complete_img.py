@@ -3,20 +3,26 @@ import numpy as np
 from PIL import Image
 from pytesseract import *
 import re
+import sys
+sys.path.append('../')
+import logger_hander
 
 class OCR_instagram:
     def __init__(self):
         """
-            initialize variables
+            initialize loggers
         """
-        pass
+        self.logger = logger_hander.set_logger()
 
     def fetch_text(self, img):
         """
             get Text from input img
         """
-        text_result = pytesseract.image_to_string(img)
-        return text_result
+        try:
+            text_result = pytesseract.image_to_string(img)
+            return text_result
+        except Exception as e:
+            self.logger.exception("Something went Wrong while Extracting Text {}".format(e))
 
     def get_acc_holder_name_text(self, img_text):
         """
@@ -32,7 +38,7 @@ class OCR_instagram:
                 holder_name = img_text.split("<")[1].strip().split("\n")[0]
                 return holder_name
         except Exception as e:
-            print(e)
+            self.logger.exception("Something went Wrong while getting Account Holder Name {}".format(e))
 
     def check_followers(self, followers_list, check_list):
         """
@@ -56,14 +62,20 @@ class OCR_instagram:
            input : img_path, social_media_name & followers_list for checking
            Output : Followers present or not Present
         """
-
-        img = cv2.imread(img_path)
-        text_result = self.fetch_text(img)
-        print(text_result,"------------------")
-        acc_holder_name = self.get_acc_holder_name_text(text_result)
-        print("Account Holder Name : ",acc_holder_name)
-        followers_list = text_result.split("<")[1].split()
-        print("Followers List : ",self.check_followers(followers_list, check_followers_list))
+        try:
+            img = cv2.imread(img_path)
+            text_result = self.fetch_text(img)
+            # print(text_result,"------------------")
+            acc_holder_name = self.get_acc_holder_name_text(text_result)
+            print("Account Holder Name : ",acc_holder_name)
+            followers_list = text_result.split("<")[1].split()
+            result = self.check_followers(followers_list, check_followers_list)
+            if all(bool(x) == True for x in result):
+                print("\n ******************\n All Followers Present \n ******************\n")
+            else:
+                print("\n ******************\n Followers not Present : ",result, "\n ******************\n")
+        except Exception as e:
+            self.logger.exception("Something went Wrong in instagram handler {}".format(e))
 
 
 # if __name__ == "__main__":
