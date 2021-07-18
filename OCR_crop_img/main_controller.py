@@ -11,7 +11,10 @@ class OCR_main_controller:
             initialize variables
         """
         pass
-    
+
+    def default(self):
+        return "Incorrect Social Network Name"
+
     def social_media_handler(self, img_path,social_media_name,check_followers_list):
         """
            Social Media handler
@@ -19,14 +22,12 @@ class OCR_main_controller:
            Output : Followers present or not Present
         """
         try:
-            if social_media_name.lower() == "instagram":
-                ocr_insta_obj.instagram_handler( img_path,check_followers_list)
-
-            elif social_media_name.lower() == "facebook":
-                ocr_fb_obj.facebook_handler( img_path,check_followers_list)
-
-            elif social_media_name.lower() == "linkedin":
-                ocr_linkedin_obj.linkedin_handler( img_path,check_followers_list)
+            switcher = {
+                "instagram": ocr_insta_obj.instagram_handler(img_path, check_followers_list),
+                "facebook": ocr_fb_obj.facebook_handler( img_path,check_followers_list),
+                "linkedin": ocr_linkedin_obj.linkedin_handler( img_path,check_followers_list),
+            }
+            return switcher.get(social_media_name, self.default)()
         
         except Exception as e:
             logger.exception("Something went Wrong {}".format(e))
