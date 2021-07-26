@@ -38,7 +38,7 @@ if __name__ == "__main__":
         logger = logger_hander.set_logger()
         ocr_insta_obj = OCR_instagram()
 
-        img_path = "../Data/test2.jpg"
+        img_path = "../Data/test_s7.jpg"
         check_followers_list = ['bridgelabz', 'codermacha', 'confident_coder']
         social_media_name = "Instagram"
 

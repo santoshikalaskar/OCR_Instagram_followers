@@ -29,14 +29,19 @@ class OCR_instagram:
             get Account holder name in text format
         """
         try:
-            holder_name = img_text.split("<")[1].split('\n')[0]
-            regexp = "(?:^|(?<= ))[a-zA-Z0-9]+(?= |$)"
-            holder_name = re.findall(regexp, holder_name)
-            if len(holder_name) > 0:
-                return holder_name[0]
+            if (img_text.find("<") == -1):
+                if (img_text.find("Followers") != -1):
+                    holder_name = img_text.split("Followers")[0].strip().split("\n")[-3]
+                    return holder_name
             else:
-                holder_name = img_text.split("<")[1].strip().split("\n")[0]
-                return holder_name
+                holder_name = img_text.split("<")[1].split('\n')[0]
+                regexp = "(?:^|(?<= ))[a-zA-Z0-9]+(?= |$)"
+                holder_name = re.findall(regexp, holder_name)
+                if len(holder_name) > 0:
+                    return holder_name[0]
+                else:
+                    holder_name = img_text.split("<")[1].strip().split("\n")[0]
+                    return holder_name
         except Exception as e:
             self.logger.exception("Something went Wrong while getting Account Holder Name {}".format(e))
 
@@ -57,7 +62,20 @@ class OCR_instagram:
         except Exception as e:
             self.logger.exception("Something went Wrong while Checking list of followers present or not from result list {}".format(e))
 
+    def increase_size(self, img):
+        width = int(img.shape[1] * 2)
+        height = int(img.shape[0] * 2)
+        dim = (width, height)
+        resized_img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+        self.logger.info('Resized Dimensions : {}'.format(str(resized_img.shape)))
+        return resized_img
 
+    def get_followers_list(self, text):
+        if (text.find("<") == -1):
+            return text
+        else:
+            followers_list = text.split("<")[1].split()
+            return followers_list
     def instagram_handler(self, img_path, check_followers_list):
         """
            Instagram OCR
@@ -65,12 +83,19 @@ class OCR_instagram:
            Output : Followers present or not Present
         """
         try:
-            img = cv2.imread(img_path)
+            img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+            self.logger.info('Original Dimensions : {}'.format(str(img.shape)))
             text_result = self.fetch_text(img)
-            # print(text_result,"------------------")
+
+            if img.shape[1] < 600 and img.shape[0] < 1300 :
+                resized_img = self.increase_size(img)
+                text_result = self.fetch_text(resized_img)
+
+            print("\n-------------------------\n",text_result, "\n---------------------------------")
+
             acc_holder_name = self.get_acc_holder_name_text(text_result)
             print("Account Holder Name : ",acc_holder_name)
-            followers_list = text_result.split("<")[1].split()
+            followers_list = self.get_followers_list(text_result)
             result = self.check_followers(followers_list, check_followers_list)
             if all(bool(x) == True for x in result):
                 print("\n ******************\n All Followers Present \n ******************\n")
